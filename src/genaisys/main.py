@@ -1,13 +1,8 @@
-from openai import OpenAI
-from genaisys.openai import init_openai_api
+from genaisys.openai_config import check_openai_api_key
 
 def main():
     print("GenAISys initialized")
 
-def call_openai() -> OpenAI:
-    client = init_openai_api()
-    return client
-
 if __name__ == "__main__":
     main()
-    print(call_openai().api_key)
+    print(check_openai_api_key().api_key)
