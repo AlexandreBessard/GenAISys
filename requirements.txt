@@ -1,0 +1,3 @@
+# --- Core ---
+pydantic-settings>=2.0   # structured config from env/.env
+python-dotenv>=1.0       # .env support (local dev)
