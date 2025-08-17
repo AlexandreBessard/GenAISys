@@ -1,5 +1,5 @@
 from openai import OpenAI
-from genaisys.config.config import settings
+from ..config import settings
 
 def init_openai_api() -> OpenAI:
     if not settings.OPENAI_API_KEY:

@@ -1,7 +1,5 @@
 from openai import OpenAI
-
-from config.config import settings
-from config.openai.openai_setup import init_openai_api
+from genaisys.openai import init_openai_api
 
 def main():
     print("GenAISys initialized")
