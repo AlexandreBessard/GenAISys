@@ -1,7 +1,13 @@
-from genaisys.openai_config import make_openai_api_call, run_conversational_agent
+from genaisys import run_conversational_agent
 
 def main():
     print("GenAISys initialized")
 
 if __name__ == "__main__":
-    run_conversational_agent("", "", "", "", "")
+    run_conversational_agent(
+        uinput="Hello, how are you today?",
+        mrole="system",
+        mcontent="You are a helpful and friendly AI assistant.",
+        user_role="user",
+        user_name="Alex"
+    )
