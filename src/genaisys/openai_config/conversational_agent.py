@@ -12,14 +12,6 @@ def run_conversational_agent(uinput, mrole, mcontent, user_role,user_name):
     return conversational_agent(uinput, mrole, mcontent, user_role,user_name)
 
 def conversational_agent(initial_user_input, mrole, mcontent, user_role, user_name):
-    # print(f"Welcome {user_name} to the conversational agent! Type 'q' or 'quit' to end the conversation.")
-    # response = make_openai_api_call(
-    #     input=initial_user_input,
-    #     mrole=mrole,
-    #     mcontent=mcontent,
-    #     user_role=user_role
-    # )
-    # print(f"Assistant: {response}")
     messages_obj = [{"role": mrole, "content": mcontent}] # Represents a list [] which contains 1 dictionary {}
     print("Welcome to the conversational agent! Type 'q' or 'quit' to end the conversation")
     print(messages_obj[0]["content"])
@@ -62,7 +54,10 @@ def conversational_agent(initial_user_input, mrole, mcontent, user_role, user_na
         # Save the conversation log to a file
         with open("conversation_log.txt", "w") as log_file:
             log_file.write(
+                # new line and combine strings
                 "\n".join([
+                    # if the role is user, use user_name otherwise use the role name
+                    # f means a line
                     f"{(user_name if entry['role'] == 'user' else entry['role'])}: {entry['content']}"
                     for entry in messages_obj
                 ])
