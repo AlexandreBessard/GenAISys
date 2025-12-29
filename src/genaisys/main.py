@@ -5,7 +5,7 @@ def main():
 
 if __name__ == "__main__":
     run_conversational_agent(
-        uinput="Hello, how are you today?",
+        uinput="Tell me about New York. Keep it short",
         mrole="system",
         mcontent="You are a helpful and friendly AI assistant.",
         user_role="user",
