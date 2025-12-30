@@ -3,3 +3,6 @@ pydantic-settings>=2.0   # structured config from env/.env
 python-dotenv>=1.0       # .env support (local dev)
 
 openai==1.57.1
+
+#  --- Vector Database ---
+pinecone-client==5.0.1

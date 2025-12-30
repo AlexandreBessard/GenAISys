@@ -1,6 +1,8 @@
 from openai import OpenAI
 from ..config import settings
-
+#Singleton pattern
+# Private variable
+_openai_client: OpenAI | None = None
 
 def init_openai_api() -> OpenAI:
     """Initialize and return an OpenAI client.
@@ -14,6 +16,9 @@ def init_openai_api() -> OpenAI:
     Raises:
         RuntimeError: If OPENAI_API_KEY is not configured.
     """
-    if not settings.OPENAI_API_KEY:
-        raise RuntimeError('OPENAI_API_KEY not set')
-    return OpenAI(api_key=settings.OPENAI_API_KEY)
+    global _openai_client # This tell Python to use the _open_client variable defined outside the function
+    if _openai_client is None:
+        if not settings.OPENAI_API_KEY:
+            raise RuntimeError('OPENAI_API_KEY not set')
+        _openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    return _openai_client

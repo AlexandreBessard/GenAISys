@@ -1,0 +1,3 @@
+ID,SCENARIO
+100,Semantic analysis.This is not an analysis but a semantic search. Provide more information on the topic.
+200,Sentiment analysis  Read the content return a sentiment analysis analysis on this text and provide a score with the label named : Sentiment analysis score followed by a numerical value between 0 and 1  with no + or - sign and  add an explanation to justify the score.

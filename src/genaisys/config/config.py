@@ -9,6 +9,7 @@ Class that helps you load configuration from a ".env" file.
 """
 class Settings(BaseSettings):
     OPENAI_API_KEY: str | None = None
+    PINECONE_API_KEY: str | None = None
 
     class Config:
         env_file = PACKAGE_ROOT / ".env"  # Absolute path to .env in src/genaisys/

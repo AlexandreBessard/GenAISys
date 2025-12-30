@@ -2,6 +2,7 @@ from genaisys import run_conversational_agent
 from genaisys.openai_config import make_openai_api_call
 from genaisys.orchestrator.scenarios import SCENARIOS, get_scenario
 
+# Tell the model how to reason or act
 if __name__ == "__main__":
     # Teh input contains an indication of what is expected of the generative AI model.
     # input = "Is the following sentence grammatically correct:This aint the right way to talk"

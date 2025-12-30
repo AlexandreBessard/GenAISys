@@ -1,0 +1,29 @@
+from .openai_setup import init_openai_api
+
+
+def get_embedding(
+        texts: str | list[str],
+        model: str = "text-embedding-3-small"
+) -> list[list[float]]:
+    """Generate embeddings for the given text(s).
+    Args:
+        texts: A single string or list of strings to embed.
+        model: The embedding model to use.
+
+    Returns:
+        List of embedding vectors (list of floats).
+    """
+    # Handle single text input
+    if isinstance(texts, str):
+        texts = [texts]
+    # Clean text by replacing newlines with spaces
+    texts = [text.replace("\n", " ") for text in texts]
+    client = init_openai_api()
+    response = client.embeddings.create(input=texts, model=model)
+    # Extract embeddings from response
+    embeddings = [item.embedding for item in response.data]
+    return embeddings # return a list
+
+
+def embed_chunks(chunks, embedding_model="text-embedding-3-small", batch_size=1000):
+    pass
