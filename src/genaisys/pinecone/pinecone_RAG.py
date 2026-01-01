@@ -2,6 +2,7 @@ from pathlib import Path
 
 from genaisys import embed_chunks
 from genaisys.pinecone.upsert_to_pinecone import upsert_to_pinecone, batch_upsert
+from genaisys.querying_functions.query_vector_store import query_vector_store
 from genaisys.utils.load_file import load_file
 from genaisys.openai_config.chunk_text_with_gpt4o import chunk_text_with_gpt4o
 from genaisys.pinecone_config import get_pinecode_client, get_serverless_spec
@@ -43,3 +44,22 @@ if __name__ == "__main__":
     pinecone = get_pinecode_client()
     index = pinecone.Index(index_name)
     print(index.describe_index_stats())
+
+    namespace = "genaisys"
+    # Retrieve instruction scenario
+    query_text = "The customers like the idea of travelling and learning. Provide your sentiment."
+    # query_text = "Provide info about new york"
+    text, target_id = query_vector_store(query_text, namespace=namespace)
+    print("Final output:")
+    print(f"Text: {text}")
+    print(f"Target ID: {target_id}")
+
+    # Define your namespace and query text
+    namespace = "data01"  # Example namespace
+    query_text = "What did the CTO say about the different types of memory?"
+    # Call the query function
+    text, target_id = query_vector_store(query_text, namespace)
+    # Display the final output
+    print("Final output:")
+    print(f"Text: {text}")
+    print(f"Target ID: {target_id}")
