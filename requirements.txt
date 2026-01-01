@@ -6,3 +6,6 @@ openai==1.57.1
 
 #  --- Vector Database ---
 pinecone-client==5.0.1
+
+# --- UI/Widgets ---
+ipywidgets==8.1.7
