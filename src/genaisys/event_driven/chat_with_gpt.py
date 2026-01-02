@@ -1,7 +1,7 @@
 import openai
 
 from genaisys import init_openai_api, make_openai_api_call
-from genaisys.querying_functions import get_query_result
+from genaisys.querying_functions import get_query_results
 from genaisys.querying_functions import display_results
 
 def chat_with_gpt(messages, user_message):
@@ -18,7 +18,7 @@ def chat_with_gpt(messages, user_message):
         #define query text
         query_text=user_message
         # Retrieve query results
-        query_results = get_query_result(query_text, namespace)
+        query_results = get_query_results(query_text, namespace)
         # Process and display the results
         print("Processed query results:")
         qtext, target_id = display_results(query_results)

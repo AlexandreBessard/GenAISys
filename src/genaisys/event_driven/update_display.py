@@ -17,7 +17,6 @@ def update_display():
 
     with conversation_output:
         clear_output(wait=True)
-
         # Display conversation history
         for i, entry in enumerate(main.user_histories[main.active_user]):
             with debug_output:

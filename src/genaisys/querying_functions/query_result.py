@@ -3,7 +3,7 @@ from genaisys.querying_functions.embedding import get_embedding
 
 
 # Receives the query, sends it to be embedded, makes the actual query and returns the response
-def get_query_result(query_text, namespace):
+def get_query_results(query_text, namespace):
     # Query converted to numerical data
     query_vector = get_embedding(query_text)
     index_name = "genai-v1"
