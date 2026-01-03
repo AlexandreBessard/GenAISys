@@ -1,13 +1,17 @@
 import json
+from pathlib import Path
 
-from IPython.core.display_functions import display
-from ipywidgets import HTML
-
-# Function to save conversation history to a file
-def save_conversation_history():
-    from . import main
-    user_histories = main.user_histories
-    filename = "conversation_history.json"  # Define the filename
-    with open(filename, 'w') as file:
-        json.dump(user_histories, file, indent=4)  # Write the user histories dictionary to the file in JSON format
-    display(HTML(f"<div style='color: green;'><strong>Conversation history saved to {filename}.</strong></div>"))
+# Function to save conversation history to separate files per user
+def save_conversation_history(user_histories, output_dir=None):
+    if output_dir is None:
+        output_dir = Path(__file__).parent.parent / "conversation_histories"
+    else:
+        output_dir = Path(output_dir)
+    # Create directory if it doesn't exist
+    output_dir.mkdir(parents=True, exist_ok=True)
+    # Save each user's history to a separate JSON file
+    for user, history in user_histories.items():
+        filename = output_dir / f"{user}_conversation_history.json"
+        with open(filename, 'w') as file:
+            json.dump(history, file, indent=4)
+    return output_dir

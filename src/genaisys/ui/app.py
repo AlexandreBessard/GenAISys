@@ -3,11 +3,13 @@ import sys
 from pathlib import Path
 import random
 
+from genaisys.event_driven.save_conversation_history import save_conversation_history
+
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import streamlit as st
-from genaisys.event_driven.chat_with_gpt import chat_with_gpt
+from genaisys.chat.chat import chat
 
 # Page config
 st.set_page_config(page_title="Generative AI Chat Interface", page_icon="🤖", layout="centered")
@@ -47,13 +49,19 @@ with col_cb3:
 # Reasoning Dropdown
 reasoning_mode = st.selectbox(
     "🧠 Reasoning:",
-    ["None", "Analysis", "Generation", "Mobility"]
+    ["None",
+     #"Analysis",
+     #"Generation",
+     #"Mobility"
+     ]
 )
 
 # Model Dropdown
 model_selection = st.selectbox(
     "🤖 Model:",
-    ["OpenAI", "DeepSeek"]
+    ["OpenAI",
+     #"DeepSeek"
+     ]
 )
 
 # ERP Integration Dropdown
@@ -70,13 +78,21 @@ erp_integration = st.selectbox(
     ]
 )
 
-# Initialize session state for messages and output
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-if "conversation_output" not in st.session_state:
-    st.session_state.conversation_output = ""
+# Initialize session state for user histories
+if "user_histories" not in st.session_state:
+    st.session_state.user_histories = {"User01": [], "User02": [], "User03": []}
 if "pinecone_context" not in st.session_state:
     st.session_state.pinecone_context = ""
+if "save_message" not in st.session_state:
+    st.session_state.save_message = None
+
+# Show save message if exists
+if st.session_state.save_message:
+    st.success(st.session_state.save_message)
+    st.session_state.save_message = None
+
+# Get current user's message history
+messages = st.session_state.user_histories[selected_user]
 
 # Message Input with Form (allows Enter to submit)
 with st.form(key="message_form", clear_on_submit=True):
@@ -89,20 +105,22 @@ with st.form(key="message_form", clear_on_submit=True):
 # Handle Send button click
 if send_clicked and user_message:
     if user_message.lower() in ["exit", "quit"]:
-        st.session_state.conversation_output += "\n\n*Conversation ended.*"
+        output_dir = save_conversation_history(st.session_state.user_histories)
+        st.session_state.user_histories[selected_user] = []
+        st.session_state.save_message = f"✅ Conversation history saved to {output_dir}"
+        st.rerun()
     else:
         # Add user message to history
-        st.session_state.messages.append({"role": "user", "content": user_message})
+        messages.append({"role": "user", "content": user_message, "username": selected_user})
 
         # Show spinner while processing
         with st.spinner("Processing..."):
-            response = chat_with_gpt(st.session_state.messages, user_message)
-
-        # Add to conversation output
-        st.session_state.conversation_output += f"\n\n**{selected_user}:** {user_message}\n\n**Assistant:** {response}"
+            # Process user message
+            #response = chat_with_gpt(messages, user_message)
+            response = chat(messages)
 
         # Add assistant response to history
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        messages.append({"role": "assistant", "content": response})
 
         # Simulate Pinecone context retrieval
         if "Pinecone" in user_message or "RAG" in user_message:
@@ -113,8 +131,8 @@ st.markdown("### 📋 Conversation Output")
 
 # Build conversation HTML with colored messages
 conversation_html = '<div class="output-area">'
-if st.session_state.messages:
-    for msg in st.session_state.messages:
+if messages:
+    for msg in messages:
         if msg["role"] == "user":
             conversation_html += f'<div class="user-message"><strong>👤 {selected_user}:</strong> {msg["content"]}</div>'
         else:
@@ -143,7 +161,6 @@ with st.sidebar:
         st.rerun()
 
     if st.button("🗑️ Clear Conversation"):
-        st.session_state.messages = []
-        st.session_state.conversation_output = ""
+        st.session_state.user_histories[selected_user] = []
         st.session_state.pinecone_context = ""
         st.rerun()
