@@ -1,0 +1,48 @@
+/* Status indicator */
+.status-connected {
+    color: #28a745;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.status-dot {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+/* Output area */
+.output-area {
+    border: 1px solid currentColor;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 0.9;
+}
+
+/* User message - green accent */
+.user-message {
+    border-left: 4px solid #28a745;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Assistant message - blue accent */
+.assistant-message {
+    border-left: 4px solid #007bff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Pinecone results panel */
+.pinecone-results {
+    border: 1px solid currentColor;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    opacity: 0.9;
+}
