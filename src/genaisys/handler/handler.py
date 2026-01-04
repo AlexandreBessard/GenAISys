@@ -1,4 +1,5 @@
-from genaisys import init_openai_api, make_openai_api_call
+from genaisys import make_openai_api_call
+from genaisys.deepseek.deepseek import make_deepseek_call
 
 def handle_with_memory(history, current_user_message, **kwargs):
     conversation_history = [
@@ -26,7 +27,13 @@ def handle_with_memory(history, current_user_message, **kwargs):
         print(task_response)
         return task_response
     elif models == "DeepSeek":
-        # TODO: Implement DeepSeek API call
-        return "DeepSeek model not yet implemented"
+        task_response = make_deepseek_call(
+            input=full_context,
+            mrole=mrole,
+            mcontent=mcontent,
+            user_role=user_role
+        )
+        print(task_response)
+        return task_response
 
     return "No model selected"

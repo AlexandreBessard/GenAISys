@@ -60,7 +60,7 @@ reasoning_mode = st.selectbox(
 model_selection = st.selectbox(
     "🤖 Model:",
     ["OpenAI",
-     #"DeepSeek"
+     "DeepSeek"
      ]
 )
 

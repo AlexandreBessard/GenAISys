@@ -11,3 +11,14 @@ pinecone-client==5.0.1
 # --- UI/Widgets ---
 ipywidgets==8.1.7
 streamlit>=1.32
+
+# --- Hugging Face ---
+huggingface_hub>=0.27.0
+transformers>=4.47.0
+accelerate>=1.2.0
+
+# --- PyTorch ---
+torch>=2.0.0
+
+# --- Local LLM (CPU optimized) ---
+llama-cpp-python>=0.3.0
