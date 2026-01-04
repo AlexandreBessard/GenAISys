@@ -8,6 +8,10 @@ from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_excep
 from .openai_setup import init_openai_api
 
 # Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Default configuration (can be overridden via environment variables)

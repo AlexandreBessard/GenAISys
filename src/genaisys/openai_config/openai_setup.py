@@ -1,6 +1,6 @@
 from openai import OpenAI
 from ..config import settings
-#Singleton pattern
+# Singleton pattern
 # Private variable
 _openai_client: OpenAI | None = None
 
