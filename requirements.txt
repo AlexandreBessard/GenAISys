@@ -1,6 +1,7 @@
 # --- Core ---
 pydantic-settings>=2.0   # structured config from env/.env
 python-dotenv>=1.0       # .env support (local dev)
+tenacity>=8.2            # retry logic with exponential backoff
 
 openai==1.57.1
 

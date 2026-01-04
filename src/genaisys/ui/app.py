@@ -110,16 +110,17 @@ if send_clicked and user_message:
         st.session_state.save_message = f"✅ Conversation history saved to {output_dir}"
         st.rerun()
     else:
-        # Add user message to history
-        messages.append({"role": "user", "content": user_message, "username": selected_user})
-
+        # Current message (separate from history)
+        current_message = {"role": "user", "content": user_message, "username": selected_user}
+        # History (previous messages only)
+        history = messages.copy()
         # Show spinner while processing
         with st.spinner("Processing..."):
-            # Process user message
-            #response = chat_with_gpt(messages, user_message)
-            response = chat(messages)
+            # Process user message with history and current message separated
+            response = chat(history, current_message, reasoning_mode, model_selection)
 
-        # Add assistant response to history
+        # Add user message and assistant response to history
+        messages.append(current_message)
         messages.append({"role": "assistant", "content": response})
 
         # Simulate Pinecone context retrieval
