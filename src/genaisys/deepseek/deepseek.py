@@ -42,37 +42,27 @@ def _load_model():
 
 
 def make_deepseek_call(input: str, mrole: str = "system",
-                       mcontent: str = "You are a helpful assistant.",
+                       mcontent: str = "You are a helpful assistant. Keep it short",
                        user_role: str = "user",
                        max_new_tokens: int = 128,
                        temperature: float = 0.7) -> str:
-    """
-    Make a call to the local DeepSeek GGUF model.
-
-    Args:
-        input: The user's input/prompt
-        mrole: Role for system message (unused, kept for API compatibility)
-        mcontent: System message content
-        user_role: Role for user message (unused, kept for API compatibility)
-        max_new_tokens: Maximum tokens to generate (lower = faster)
-        temperature: Sampling temperature
-
-    Returns:
-        Generated response text
-    """
     logger.info("DeepSeek call started | max_tokens=%d, temperature=%.2f", max_new_tokens, temperature)
     logger.debug("Input prompt length: %d characters", len(input))
 
     model = _load_model()
 
-    prompt = f"{mcontent}\n\nUser: {input}\n\nAssistant:"
+    # mcontent = system prompt (e.g., "You are a helpful assistant.")
+    # input = conversation history + current user question (already formatted with User:/Assistant:)
+    prompt = f"{mcontent}\n\n{input}\nAssistant:"
+
+    logger.debug("Full prompt:\n%s", prompt)
 
     generation_start = time.time()
     output = model(
         prompt,
         max_tokens=max_new_tokens,
         temperature=temperature,
-        stop=["User:", "\n\n"]
+        stop=["User:", "\n\nUser"]
     )
     generation_time = time.time() - generation_start
 

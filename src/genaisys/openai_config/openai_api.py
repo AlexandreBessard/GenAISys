@@ -40,26 +40,6 @@ def make_openai_api_call(
     max_tokens: Optional[int] = None,
     timeout: Optional[int] = None
 ) -> str:
-    """
-    Make an API call to OpenAI with retry logic and error handling.
-
-    Args:
-        input: The user input/prompt
-        mrole: Role for system message (default: "system")
-        mcontent: System message content (default: "You are a helpful assistant.")
-        user_role: Role for user message (default: "user")
-        model: OpenAI model to use (default: gpt-4o)
-        temperature: Response randomness 0-1 (default: 0)
-        max_tokens: Maximum response tokens (default: 1024)
-        timeout: Request timeout in seconds (default: 30)
-
-    Returns:
-        str: The assistant's response content
-
-    Raises:
-        APIError: For non-retryable API errors
-    """
-    # Use defaults if not specified
     model = model or DEFAULT_MODEL
     temperature = temperature if temperature is not None else DEFAULT_TEMPERATURE
     max_tokens = max_tokens or DEFAULT_MAX_TOKENS

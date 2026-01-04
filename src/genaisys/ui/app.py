@@ -144,15 +144,6 @@ conversation_html += '</div>'
 
 st.markdown(conversation_html, unsafe_allow_html=True)
 
-# Pinecone Results Panel
-st.markdown("### 🔍 Context Retrieved from Pinecone")
-st.markdown('<div class="pinecone-results">', unsafe_allow_html=True)
-if st.session_state.pinecone_context:
-    st.markdown(st.session_state.pinecone_context)
-else:
-    st.markdown("*No results yet.*")
-st.markdown('</div>', unsafe_allow_html=True)
-
 # Sidebar with additional info (optional)
 with st.sidebar:
     st.markdown("### Settings")
