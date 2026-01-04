@@ -41,28 +41,30 @@ def _load_model():
     return _model
 
 
+SYSTEM_PROMPT = "You are a helpful assistant. Give short, direct answers. Do not ramble or ask follow-up questions."
+
+
 def make_deepseek_call(input: str, mrole: str = "system",
-                       mcontent: str = "You are a helpful assistant. Keep it short",
+                       mcontent: str = "",
                        user_role: str = "user",
-                       max_new_tokens: int = 128,
-                       temperature: float = 0.7) -> str:
+                       max_new_tokens: int = 64,
+                       temperature: float = 0.3) -> str:
     logger.info("DeepSeek call started | max_tokens=%d, temperature=%.2f", max_new_tokens, temperature)
     logger.debug("Input prompt length: %d characters", len(input))
 
     model = _load_model()
 
-    # mcontent = system prompt (e.g., "You are a helpful assistant.")
-    # input = conversation history + current user question (already formatted with User:/Assistant:)
-    prompt = f"{mcontent}\n\n{input}\nAssistant:"
+    # Build prompt with system instruction
+    prompt = f"{SYSTEM_PROMPT}\n\n{input}\nAssistant:"
 
-    logger.debug("Full prompt:\n%s", prompt)
+    logger.info("Full prompt:\n%s", prompt)
 
     generation_start = time.time()
     output = model(
         prompt,
         max_tokens=max_new_tokens,
         temperature=temperature,
-        stop=["User:", "\n\nUser"]
+        stop=["User:", "You:", "\n\n", "\nUser", "\nYou"]
     )
     generation_time = time.time() - generation_start
 
@@ -74,6 +76,6 @@ def make_deepseek_call(input: str, mrole: str = "system",
 
     logger.info("DeepSeek call completed | time=%.2fs, tokens=%d, speed=%.1f tokens/sec",
                 generation_time, tokens_generated, tokens_per_sec)
-    logger.debug("Response length: %d characters", len(response))
+    logger.info("Response length: %d characters", len(response))
 
     return response

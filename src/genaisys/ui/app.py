@@ -121,7 +121,7 @@ if send_clicked and user_message:
 
         # Add user message and assistant response to history
         messages.append(current_message)
-        messages.append({"role": "assistant", "content": response})
+        messages.append({"role": "assistant", "content": response, "model": model_selection})
 
         # Simulate Pinecone context retrieval
         if "Pinecone" in user_message or "RAG" in user_message:
@@ -137,7 +137,8 @@ if messages:
         if msg["role"] == "user":
             conversation_html += f'<div class="user-message"><strong>👤 {selected_user}:</strong> {msg["content"]}</div>'
         else:
-            conversation_html += f'<div class="assistant-message"><strong>🤖 Assistant:</strong> {msg["content"]}</div>'
+            model_name = msg.get("model", "Unknown")
+            conversation_html += f'<div class="assistant-message"><strong>🤖 Assistant ({model_name}):</strong> {msg["content"]}</div>'
 else:
     conversation_html += '<em>Conversation output will appear here...</em>'
 conversation_html += '</div>'
