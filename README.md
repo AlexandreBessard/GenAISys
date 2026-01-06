@@ -11,4 +11,4 @@ Or set variables directly in the Run Configuration.
 - Create a .env file at the root directory with the OPENAI_API_KEY
 
 To download the DeepSeek model locally:
-huggingface-cli download deepseek-ai/DeepSeek-R1-Distill-Llama-8B --local-dir src/genaisys/models/DeepSeek-R1-Distill-Llama-8B
+huggingface-cli download bartowski/DeepSeek-R1-Distill-Llama-8B-GGUF --include "DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf" --local-dir src/genaisys/models/DeepSeek-R1-Distill-Llama-8B-GGUF

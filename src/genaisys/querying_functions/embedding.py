@@ -4,6 +4,9 @@ from genaisys.pinecone_config import get_pinecode_client
 
 # Receives text to embed and sends the embedded text back
 def get_embedding(text, model="text-embedding-3-small"):
+    if isinstance(text, dict):
+        text = text.get("content", "")
+
     text = text.replace("\n", " ")
     client = init_openai_api()
     # Convert text to numerical values

@@ -50,6 +50,8 @@ with col_cb3:
 reasoning_mode = st.selectbox(
     "🧠 Reasoning:",
     ["None",
+     "RAG",
+     "Customer"
      #"Analysis",
      #"Generation",
      #"Mobility"
@@ -94,10 +96,20 @@ if st.session_state.save_message:
 # Get current user's message history
 messages = st.session_state.user_histories[selected_user]
 
+# Default prompt for RAG mode
+default_prompt = ""
+if reasoning_mode == "RAG":
+    default_prompt = "What did the CTO say about the different types of memory?"
+
+# Default prompt for Customer mode
+if reasoning_mode == "Customer":
+    default_prompt = "Propose the best activity in Paris"
+
 # Message Input with Form (allows Enter to submit)
 with st.form(key="message_form", clear_on_submit=True):
     user_message = st.text_input(
         "💬 Your Message:",
+        value=default_prompt,
         placeholder="Type your message here or type 'exit' or 'quit' to end the conversation."
     )
     send_clicked = st.form_submit_button("📤 Send")

@@ -54,9 +54,6 @@ def ml_agent(feature1_value, feature2_column):
     predicted_activity = le_activity.inverse_transform([predicted_activity_encoded])[0]
 
     # Generate output text
-    text = (f"The customers liked the {predicted_activity} because it reminded them of how "
-            f"our democracies were born and how it works today. "
-            f"They would like more activities during their trips that provide insights into "
-            f"the past to understand our lives.")
+    text = (f"The customers liked the {predicted_activity}")
 
     return text
