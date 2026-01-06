@@ -51,7 +51,8 @@ reasoning_mode = st.selectbox(
     "🧠 Reasoning:",
     ["None",
      "RAG",
-     "Customer"
+     "Customer",
+     "Weather"
      #"Analysis",
      #"Generation",
      #"Mobility"
@@ -142,20 +143,21 @@ if send_clicked and user_message:
 # Output Area
 st.markdown("### 📋 Conversation Output")
 
-# Build conversation HTML with colored messages
-conversation_html = '<div class="output-area">'
-if messages:
-    for msg in messages:
-        if msg["role"] == "user":
-            conversation_html += f'<div class="user-message"><strong>👤 {selected_user}:</strong> {msg["content"]}</div>'
-        else:
-            model_name = msg.get("model", "Unknown")
-            conversation_html += f'<div class="assistant-message"><strong>🤖 Assistant ({model_name}):</strong> {msg["content"]}</div>'
-else:
-    conversation_html += '<em>Conversation output will appear here...</em>'
-conversation_html += '</div>'
+# Use Streamlit's native chat container with auto-scroll
+chat_container = st.container(height=400)
 
-st.markdown(conversation_html, unsafe_allow_html=True)
+with chat_container:
+    if messages:
+        for msg in messages:
+            if msg["role"] == "user":
+                with st.chat_message("user"):
+                    st.write(f"**{selected_user}:** {msg['content']}")
+            else:
+                model_name = msg.get("model", "Unknown")
+                with st.chat_message("assistant"):
+                    st.write(f"**({model_name}):** {msg['content']}")
+    else:
+        st.caption("Conversation output will appear here...")
 
 # Sidebar with additional info (optional)
 with st.sidebar:

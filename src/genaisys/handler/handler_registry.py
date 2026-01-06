@@ -1,6 +1,8 @@
 from genaisys.handle_customer.handle_customer import handle_customer
 from genaisys.handler.handler import handle_with_memory
 from genaisys.rag.handle_rag import handle_rag
+from genaisys.weather.weather import handle_weather
+
 # Represents a tuple: 1. A condition by checking when the handler should run
 # 2. An action if the condition is true
 handlers = [
@@ -25,6 +27,12 @@ handlers = [
     (
         lambda history, current_user_message, active_instruction, selected_model, **kwargs: active_instruction == "Customer",
         lambda history, current_user_message, active_instruction, selected_model, **kwargs: handle_customer(
+            current_user_message)
+    ),
+        (
+        lambda history, current_user_message, active_instruction, selected_model,
+               **kwargs: active_instruction == "Weather",
+        lambda history, current_user_message, active_instruction, selected_model, **kwargs: handle_weather(
             current_user_message)
     )
 ]
